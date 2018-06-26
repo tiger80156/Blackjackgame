@@ -1,7 +1,13 @@
 from random import randint
+from collections import namedtuple
+Card = namedtuple("card",("rank","suit"))
+ranks = [n for n in range(1,14)]
+suits = [n for n in range(2,11)]+list("AJQK")
+
 class gameplay:
     
     def __init__(self):
+        self._card = [Card(rank,suit) for rank in ranks for suit in suits]
         self.money = 1000
         self.card = []
         for i in range(13):
