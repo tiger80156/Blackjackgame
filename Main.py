@@ -1,53 +1,90 @@
-from Player import gameplay
-#Intialize the data
-ply = gameplay()
-draw = 0
-game_count = 0
-print("********THIS IS A BLACK JACK GAME************")
+from cardDrawer import CardBox,Card
+from player_new import PlayerInfo
+from Login import login, signup
+import os
 
 
-#Game started
-while True:
-    if game_count is 0:
-        game_start = input("Entry 'y' for start 'n' for exit: ")
+log = input("\"s\" for sign up\n Any key login")
 
-    if ply.money <= 0:
-        print("game over")
+#Sign up
+if log == "s":
+    userName = input("Your User Name : ")
+    password = input("Your password : ") 
+    signup(userName,password)
+    gameStart = True
+
+# Login with account
+# Input More than three 
+i = 0
+while i<3:
+    print("Input exit end this game")
+    userName = input("Your User Name : ")
+
+    if userName == "exit":
+        break 
+
+    password = input("Your password : ")
+    print("\n")
+
+    User = login(userName,password)
+    verify = User.getUserInfo()
+    i+=1
+
+    if verify:
         break
+    print("Please entry again")
 
-    if game_start is 'n' or draw is "b":
-        break
-    
-    elif game_start is "y":
-        ply.game_start(game_start)
+else:
+    print("Too many try error")
+    os.system("Pause")
+
+
+
+if verify:
+    # Start Input  
+    print("""********THIS IS A BLACK JACK GAME************
+    The Game Rule:                      """)
+
+    gameStart = input("Entry \"y\" for game Start \"n\" for game end: ").strip()
+
+    if gameStart is "y":
+
         while True:
-            #Drawing card or not
-            draw = input("Hit for 'h' & Stand for 's' & break for 'b': ")        
-            
-            #Player hit so keep drawing card 
-            if draw is 'h': 
-                #drwa_card == 1 is player drawing crad
-                ply.draw_card(1)
-                print("Your number now is: {}".format(ply.player_num))
-                if ply.player_num > 21:
-                    ply.reset_game()
-                    print("You bucks")
+            try:
+                playerNum = eval(input("Please input the player number : "))
+                break
+            except:
+                print("Player Number have to be a number")
+        # Initialize the Card Box and Player Info
+        card = CardBox(playerNum)
+
+        # Draw Card 
+        # H for hint S for stand
+        for i in range(playerNum):
+            print("***It time for player{}***".format(i+1))
+            print("Your chips Number Now : ",card.money[i])
+            card.setPlayerNum(i)
+
+            while True:
+                try:
+                    yourDealer = eval(input("How many deal you want to use this time : "))
                     break
-                    
-            #Player stand so keep
-            elif draw is 's':
-                #Verify wins, losses or bucts
-                ply.verify()
+                except:
+                    print("It must be a number")
+                
+            # Game Started
+            b = card.choiceCard(yourDealer)    
+
+            if b == "b":
                 break
             
-            #End game
-            elif draw is "b":
-                break
-            
-            #Entry wrong number
-            else:
-                print("Please entry again")
-    else:
-        print("Please entry again")
-    
-    game_count += 1
+        # Check winner
+        card.checkWinner()
+
+
+
+
+
+
+
+
