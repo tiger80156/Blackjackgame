@@ -8,8 +8,7 @@ class gameplay:
     
     def __init__(self):
         self._card = [Card(rank,suit) for rank in ranks for suit in suits]
-        self.money = 1000
-        self.card = []
+        self._money = 1000
         for i in range(13):
             self.card.append(0)
         self.player_num = 0

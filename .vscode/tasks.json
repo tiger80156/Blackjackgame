@@ -8,8 +8,12 @@
             "type": "shell",
             "command": "python",
             "args": [
-                "{$baseFilename}"
-            ]
+                "main_new.py"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
         }
     ]
 }

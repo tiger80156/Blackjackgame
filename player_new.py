@@ -1,13 +1,21 @@
-from random import randint
 from collections import namedtuple
-Card = namedtuple("card",("rank","suit"))
-ranks = [n for n in range(1,14)]
-suits = [n for n in range(2,11)]+list("AJQK")
 
-class Player:
-    
-    def __init__:
-        self._card = [Card(rank,suit) for rank in ranks for suit in suits]
-        self._money = dict(player=0,host=0)
+class PlayerInfo():
+    def __init__(self,playerNumber):
+        self._money = [1000 for i in range(playerNumber)]
+        self._point = [0 for i in range(playerNumber)]
 
-    
+    def __getattr__(self,name):
+        if name == "money":
+            return self._money
+        elif name == "point":
+            return self._point
+
+    def addPoint(self,pointDraw,playerNum):
+        if pointDraw in range(2,10):
+            self._point[playerNum] += pointDraw
+        elif pointDraw == "A":
+            self._point[playerNum] += 1
+        else:
+            self._point[playerNum] += 10
+
