@@ -1,5 +1,5 @@
 from cardDrawer import CardBox,Card
-from player_new import PlayerInfo
+from player import PlayerInfo
 from Login import login, signup
 import os
 
@@ -58,28 +58,32 @@ if verify:
         # Initialize the Card Box and Player Info
         card = CardBox(playerNum)
 
+        
+        while True:
         # Draw Card 
         # H for hint S for stand
-        for i in range(playerNum):
-            print("***It time for player{}***".format(i+1))
-            print("Your chips Number Now : ",card.money[i])
-            card.setPlayerNum(i)
+            for i in range(playerNum):
+                print("***It time for player{}***".format(i+1))
+                print("Your chips Number Now : ",card.money[i])
+                card.setPlayerNum(i)
 
-            while True:
-                try:
-                    yourDealer = eval(input("How many deal you want to use this time : "))
+                while True:
+                    try:
+                        yourDealer = eval(input("How many deal you want to use this time : "))
+                        print(end='\n')
+                        break
+
+                    except:
+                        print("It must be a number")
+                    
+                # Game Started
+                b = card.choiceCard(yourDealer)    
+
+                if b == "b":
                     break
-                except:
-                    print("It must be a number")
                 
-            # Game Started
-            b = card.choiceCard(yourDealer)    
-
-            if b == "b":
-                break
-            
-        # Check winner
-        card.checkWinner()
+            # Check winner
+            card.checkWinner()
 
 
 

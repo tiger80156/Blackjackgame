@@ -1,7 +1,7 @@
 from random import randint
 from collections import namedtuple
 from random import randint
-from player_new import PlayerInfo
+from player import PlayerInfo
 
 #Initialize
 Card = namedtuple("card",("rank","suit"))
@@ -45,12 +45,6 @@ class CardBox(PlayerInfo):
                 print("The card you draw is",self.drawCard())
                 print("Player{} point is".format(self._playerNow+1) , self._point[self._playerNow])
 
-                # Draw the card
-                # rni = randint(0,len(self._card)-1)
-                # chocar = self._card.pop(rni)
-                # self.addPoint(chocar[0],self._playerNow)
-                # print("The card you draw is",chocar)
-                # print("Player{} point is".format(self._playerNow+1) , self._point[self._playerNow])
                 
                 # The point is greater than 21; Lose the game. Add all chips together.
                 if self.checkPoint():
@@ -62,40 +56,59 @@ class CardBox(PlayerInfo):
             else:
                 return "b"
 
-
+    # Check the player point 
     def checkPoint(self):
+        # The point bigger than 21 return True to minus drawer point
         if self._point[self._playerNow] > 21:
             print("You are lose !")
             return True
+        
         return False
 
+    #Check who is winner
     def checkWinner(self):
-        maxNum = 0
 
+        maxNum = 0
+        winner = None
+        
+        # Find the winner who point is between 21 - 0
         for i in range(len(self._point)):
             item = self._point.pop()
             if 21 - item > maxNum:
                 maxNum = 21 - item
                 winner = i
-        self.bonus(maxNum,winner)
-        print("The winner is {}".format(winner+1))
-        self._money[i] +=  self._allChips
+        
+        # If this game have winner go to bonus section 
+        if winner:
+            # The bonus section is compare the number with host
+            self.bonus(maxNum,winner)
+            print("The winner is {}".format(winner+1))
+            self._money[i] +=  self._allChips
 
-    
+
+    #Compare the host number and winner Number
     def bonus(self,winnerNum,winnerPlayer):
         hostPoint = 0
+
         while hostPoint < winnerNum:
             rni = randint(0,len(self._card)-1)
             chocar = self._card.pop(rni)
-            print("Host card {} is i",chocar[0])
-            hostPoint += chocar[0]
+            print("Host card is {}".format(chocar[0]))
 
+            if chocar[0] in range(2,10): 
+                hostPoint += chocar[0]
+            elif chocar[0] == 'A':
+                hostPoint += 1
+            else:
+                hostPoint += 10
+
+            # When host lose the game, give winner extra number  
             if hostPoint > 21:
-                self.addPoint(self._allChips,winnerPlayer)
+                self._money[winnerPlayer] += self._allChips
                 break
         
-        else:
-            self.addPoint(self._allChips,winnerPlayer)
+        # else:
+        #     self.addPoint(self._allChips,winnerPlayer)
             
 
 
