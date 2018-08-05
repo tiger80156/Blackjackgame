@@ -1,9 +1,17 @@
 # This is a BlackJack game project
 
-## Add a new accountment
+## The account manager
+
+### Add a new account
 ```
-python NewAccount.py [userName] [password]
+python -n Account.py [userName] [password]
 ```
+
+### Delete a new account
+```
+python -d Account.py
+```
+
 
 ## Begin game
 ```

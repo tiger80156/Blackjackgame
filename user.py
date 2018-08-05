@@ -1,11 +1,6 @@
 import sqlite3
 
 
-# class User():
-#     def __init__(self,userName,password):
-#         self.userName = userName
-#         self.password = password
-
 def GetUserInfo(userName, password):
     sql = sqlite3.connect("userInfo.db")
     c = sql.cursor()
@@ -41,7 +36,3 @@ def Login():
 
     else:
         print("Too many try error")
-
-
-def Signup(userName, password):
-

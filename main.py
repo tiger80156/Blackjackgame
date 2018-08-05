@@ -1,8 +1,6 @@
 from cardDrawer import CardBox,Card
 from player import PlayerInfo
-from user import Login, Signup, deleteAccount
-import os
-
+from user import Login
 
 
 # ----------- Part 1 Login or Sign ---------------
@@ -13,13 +11,6 @@ if log == "s":
     userName = input("Your User Name: ")
     password = input("Your password: ")
     verify = input("Entry the password again: ")
-
-    if verify == password:
-        Signup(userName, password)
-
-if log == "d":
-
-    deleteAccount()
 
 # User intent to login
 print("------ Please Login ------ ")
