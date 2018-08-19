@@ -4,12 +4,12 @@
 
 ### Add a new account
 ```
-python -n Account.py [userName] [password]
+python Account.py -n [userName] [password]
 ```
 
 ### Delete a new account
 ```
-python -d Account.py
+python Account.py -d [userName] [password]
 ```
 
 

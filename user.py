@@ -4,18 +4,18 @@ import sqlite3
 def GetUserInfo(userName, password):
     sql = sqlite3.connect("userInfo.db")
     c = sql.cursor()
-    data = c.execute("""SELECT *  FROM USERINFO""")
-    for user in data:
-        if user[0] == userName and user[1] == password:
-            return True
+    c.execute("""SELECT *  FROM USERINFO WHERE userName='{}' AND password='{}'""".format(userName, password))
+    userInfo = c.fetchall()
+
+    if userInfo:
+        return True
     else:
         return False
 
 def Login():
     # Login with account
     # User have three time chance try their user name and password
-    i = 0
-    while i<3:
+    for i in range(3):
         print("Input exit end this game")
         userName = input("Your User Name : ")
 
@@ -25,9 +25,7 @@ def Login():
         password = input("Your password : ")
         print("\n")
 
-
         verify = GetUserInfo(userName, password)
-        i+=1
 
         if verify:
             return True

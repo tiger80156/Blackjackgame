@@ -26,9 +26,8 @@ def deleteAccount(userName, password):
     passwordInfo = c.execute(""" SELECT * From USERINFO""")
 
     for user in passwordInfo:
-        print(user[0],user[1])
         if user[0] == userName and user[1]==password:
-            c.execute("DELETE * FROM USERINFO WHERE userName='{}', password='{}'".format(userName,password))
+            c.execute("DELETE FROM USERINFO WHERE userName='{}'AND password='{}'".format(userName,password))
             print("Sucessfully delete account")
             break
 
@@ -41,8 +40,6 @@ def deleteAccount(userName, password):
 if option == "-n":
     if len(userName) >= 7 and len(password) >= 7:
 
-        # for char in charUserName:
-
         if (userName+password).isalnum() is False:
             print("Your username and password only can have number and alphabet")
 
@@ -51,8 +48,23 @@ if option == "-n":
 
             if password != verify:
                 print("The password you input doesn't match.")
+
             else:
-                addAccount(userName, password)
+                sql = sqlite3.connect("userInfo.db")
+                c = sql.cursor()
+                c.execute("""SELECT * FROM USERINFO WHERE userName='{}'""".format(userName, password))
+                userInfo = c.fetchall()
+
+
+                if userInfo:
+                    print("The userName is already exist")
+                else:
+                    addAccount(userName,password)
+                    print("The account is sucessful to create")
+
+                sql.commit()
+                sql.close()
+
 
     else:
         print("Length Error : The user name and Password Length have to be more the 7 and only content alphabet and numbers")

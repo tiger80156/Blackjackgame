@@ -3,25 +3,15 @@ from player import PlayerInfo
 from user import Login
 
 
-# ----------- Part 1 Login or Sign ---------------
-log = input("'s' for sign up\n 'd' for delete account Any key login")
-
-# User intent to sign up,
-if log == "s":
-    userName = input("Your User Name: ")
-    password = input("Your password: ")
-    verify = input("Entry the password again: ")
-
 # User intent to login
 print("------ Please Login ------ ")
 verify = Login()
 
-
 # -------------- Part 2 Black Jack Game ------------------
 if verify:
     # Start Input
-    print("""********THIS IS A BLACK JACK GAME************
-    The Game Rule:                      """)
+    # print("""********THIS IS A BLACK JACK GAME************
+    # The Game Rule:                      """)
 
     gameStart = input("Entry \"y\" for game Start \"n\" for game end: ").strip()
 
@@ -32,7 +22,7 @@ if verify:
                 playerNum = eval(input("Please input the player number : "))
                 break
             except:
-                print("Player Number have to be a number")
+                print("Player Number have to be a number.")
         # Initialize the Card Box and Player Info
         card = CardBox(playerNum)
 
@@ -41,6 +31,7 @@ if verify:
         # Draw Card
         # H for hint S for stand
             for i in range(playerNum):
+                print(end='\n')
                 print("***It time for player{}***".format(i+1))
                 print("Your chips Number Now : ",card.money[i])
                 card.setPlayerNum(i)
@@ -62,11 +53,3 @@ if verify:
 
             # Check winner
             card.checkWinner()
-
-
-
-
-
-
-
-
